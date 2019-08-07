@@ -28,8 +28,8 @@ class Articulo(models.Model):
     id_usuario=models.ForeignKey(Usuario,on_delete=models.CASCADE)
     nombre= models.CharField(max_length=10)
     precio=models.FloatField
-    descripcion = models.CharField(max_length=10)
     donacion=models.FloatField
+    descrip = models.CharField(max_length=10)
 
 class EstadoPedido(models.Model):
     id_estado_pedido= models.AutoField(primary_key=True)
@@ -50,6 +50,7 @@ class ArticuloPedido(models.Model):
     id_articulo=models.ForeignKey(Articulo,on_delete=models.CASCADE)
     id_pedido=models.ForeignKey(Pedido,on_delete=models.CASCADE)
     cantidad=models.IntegerField
+
 
 class TipoPago(models.Model):
     id_tipo_pago = models.AutoField(primary_key=True)

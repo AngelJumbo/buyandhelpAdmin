@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Buy'
+    #'Buy.apps.BuyConfig',
+    'rest_framework',
+    'Buy',
+    'django_sb_admin',
 ]
 
 MIDDLEWARE = [
@@ -100,6 +103,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+# REST_FRAMEWORK = {
+#     'PAGE_SIZE' : 10
+#
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
