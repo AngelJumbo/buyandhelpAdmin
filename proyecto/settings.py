@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Buy'
+    #'Buy.apps.BuyConfig',
+    'rest_framework',
+    'Buy',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -101,6 +104,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# REST_FRAMEWORK = {
+#     'PAGE_SIZE' : 10
+#
+# }
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -120,3 +128,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+#correo settings
+EMAIL_HOST= 'smtp-mail.outlook.com'
+EMAIL_HOST_USER= 'milton.garcia1998@hotmail.com'
+EMAIL_HOST_PASSWORD= 'mukuroXchrome'
+EMAIL_USE_TLS= True
+EMAIL_PORT= 587
+

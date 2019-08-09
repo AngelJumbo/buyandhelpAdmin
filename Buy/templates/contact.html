@@ -1,0 +1,45 @@
+{% extends "layout/base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Homepage{% endblock title %}
+
+{% block content %}
+<h1>Contáctenos</h1>
+
+<div class="row">
+  <div class="col-md-4 offset-md-4">
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <p>{{ contact_form.name.label }}</p>
+            {% render_field contact_form.name class+="form-control" %}
+            {{ contact_form.name.errors }}
+        </div>
+        <div class="form-group">
+            <p>{{ contact_form.city.label }}</p>
+            {% render_field contact_form.city class+="form-control" %}
+            {{ contact_form.email.errors }}
+        </div>
+        <div class="form-group">
+            <p>{{ contact_form.email.label }}</p>
+            {% render_field contact_form.email class+="form-control" %}
+            {{ contact_form.message.errors }}
+        </div>
+		<div class="form-group">
+            <p>{{ contact_form.issue.label }}</p>
+            {% render_field contact_form.issue class+="form-control" %}
+            {{ contact_form.message.errors }}
+        </div>
+		<div class="form-group">
+            <p>{{ contact_form.message.label }}</p>
+            {% render_field contact_form.message class+="form-control" %}
+            {{ contact_form.message.errors }}
+        </div>
+        <div class="actions">
+            <button type="submit" class="btn btn-success">Enviar</button>
+        </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}
