@@ -5,7 +5,8 @@ from .views import *
 
 
 urlpatterns = [
-    path('', index1, name="index"),
+    path('', index1, name='index'),
     url(r'^articulos/$',ArticulosList.as_view(), name ='articulos'),
-    url(r'^pizzerias/(?P<pk>[0-9]+)/$', ArticulosDetail.as_view()),
+    url(r'^articulos/(?P<pk>[0-9]+)/$', ArticulosDetail.as_view()),
+    path('contact', ContactView.as_view(),name='contact'),
 ]

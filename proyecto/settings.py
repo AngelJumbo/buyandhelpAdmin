@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     #'Buy.apps.BuyConfig',
     'rest_framework',
     'Buy',
-    'django_sb_admin',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +127,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#correo settings
+EMAIL_HOST= 'smtp-mail.outlook.com'
+EMAIL_HOST_USER= 'milton.garcia1998@hotmail.com'
+EMAIL_HOST_PASSWORD= 'mukuroXchrome'
+EMAIL_USE_TLS= True
+EMAIL_PORT= 587
