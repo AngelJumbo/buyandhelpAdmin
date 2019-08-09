@@ -21,12 +21,12 @@ from rest_framework.authtoken import views
 
 
 urlpatterns = [
-    url('api/v1/', include('Buy.urls')),
-    #url('admin/', admin.site.urls),
+    url('api/', include('Buy.urls')),
+    url('admin/', admin.site.urls),
     path('', include('Buy.urls')),
-    url('django-sb-admin/', include('django_sb_admin.urls')),
+    #url('django-sb-admin/', include('django_sb_admin.urls')),
 
 ]
 urlpatterns += [
-    url('api/v1/auth',include('rest_framework.urls'))
+    url('api/auth',include('rest_framework.urls'))
 ]

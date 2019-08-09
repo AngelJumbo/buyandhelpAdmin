@@ -1,7 +1,7 @@
 from .models import Articulo
 from rest_framework import serializers
 
-class DawSerializer(serializers.HyperlinkedModelSerializer):
+class ArticuloSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Articulo
-        fields = ('id_articulo','nombre','precio','donacion','descrip')
+        fields = ('id_articulo','id_categoria','id_usuario','nombre','precio','donacion','descrip')
