@@ -1,2 +1,1 @@
-USE DBbuy;
-SELECT * FROM auth_group;
+SELECT * FROM DBbuy.Buy_categoria;
