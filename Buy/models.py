@@ -75,3 +75,4 @@ class PuntuacionVendedor(models.Model):
     id_comprador=models.ForeignKey(Usuario, default=1, on_delete=models.SET_DEFAULT,related_name = 'comprador_puntuacion')
     puntuacion=models.IntegerField
 
+  

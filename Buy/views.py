@@ -73,3 +73,6 @@ class ArticulosList(generics.ListCreateAPIView):
 class ArticulosDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Articulo.objects.all()
     serializer_class = ArticuloSerializer
+
+
+    
