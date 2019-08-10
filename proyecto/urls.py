@@ -30,7 +30,3 @@ urlpatterns = [
 urlpatterns += [
     url('api/auth',include('rest_framework.urls'))
 ]
-
-urlpatterns = [
-path('admin/', admin.site.urls),
-]

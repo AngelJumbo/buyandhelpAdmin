@@ -25,7 +25,7 @@ SECRET_KEY = '4@qn_&=bae+jy(n6bm6!hddyi-cp6gr1mp(=(xav*coe7$p4(s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com','localhost' ]
 
 
 # Application definition
@@ -82,8 +82,8 @@ DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'DBbuy',
-            'USER': 'rootl',
-            'PASSWORD': 'c11c03c93',
+            'USER': 'root',
+            'PASSWORD': 'root',
             'HOST': 'localhost',
             'PORT': '3306',
         }
