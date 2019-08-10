@@ -78,11 +78,15 @@ WSGI_APPLICATION = 'proyecto.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'DBbuy',
+            'USER': 'rootl',
+            'PASSWORD': 'c11c03c93',
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
     }
-}
 
 
 
