@@ -45,7 +45,7 @@ class ContactView(TemplateView):
         email_message = EmailMessage(
             subject='Mensaje de usuario',
             body=body,
-            from_email=email,
+            from_email='milton.garcia1998@hotmail.com',
             to=['milton.garcia1998@hotmail.com'],
         )
         email_message.content_subtype = 'html'

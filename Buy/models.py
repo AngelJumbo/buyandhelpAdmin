@@ -41,8 +41,8 @@ class Pedido(models.Model):
     id_estado_pedido= models.ForeignKey(EstadoPedido,on_delete=models.CASCADE)
     fecha=models.DateField
     total_venta=models.FloatField
-    id_comprador=models.ForeignKey(Usuario,on_delete=models.CASCADE)
-    #id_vendedor= models.ForeignKey(Usuario, default=1, on_delete=models.SET_DEFAULT)
+    id_comprador=models.ForeignKey(Usuario,on_delete=models.CASCADE,related_name = 'comprador_pedido')
+    id_vendedor= models.ForeignKey(Usuario, default=1, on_delete=models.SET_DEFAULT,related_name = 'vendedor_pedido')
     entrega_a_tiempo=models.BooleanField
 
 class ArticuloPedido(models.Model):
@@ -71,7 +71,7 @@ class Publicacion(models.Model):
 
 class PuntuacionVendedor(models.Model):
     id_asignacion=models.AutoField(primary_key=True)
-    id_vendedor=models.ForeignKey(Usuario,on_delete=models.CASCADE,related_name = 'vendedor')
-    id_comprador=models.ForeignKey(Usuario, default=1, on_delete=models.SET_DEFAULT,related_name = 'comprador')
+    id_vendedor=models.ForeignKey(Usuario,on_delete=models.CASCADE,related_name = 'vendedor_puntuacion')
+    id_comprador=models.ForeignKey(Usuario, default=1, on_delete=models.SET_DEFAULT,related_name = 'comprador_puntuacion')
     puntuacion=models.IntegerField
 
