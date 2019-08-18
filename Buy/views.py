@@ -1,14 +1,13 @@
 from django.shortcuts import render
 from rest_framework import generics
 from .models import *
-from .serializar import ArticuloSerializer
+from .serializar import *
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from .forms import ContactForm
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
-
 
 # Create your views here.
 #index
@@ -74,5 +73,204 @@ class ArticulosDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Articulo.objects.all()
     serializer_class = ArticuloSerializer
 
+
+#get, post
+class RolList(generics.ListCreateAPIView):
+    queryset = Rol.objects.all()
+    serializer_class = RolSerializer
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(
+            queryset,
+            pk = self.kwargs['pk'],
+        )
+
+        return obj
+
+#updtate, delete
+class RolDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Rol.objects.all()
+    serializer_class = RolSerializer
+
+
+#get, post
+class UsuarioList(generics.ListCreateAPIView):
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(
+            queryset,
+            pk = self.kwargs['pk'],
+        )
+
+        return obj
+
+#updtate, delete
+class UsuarioDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
+
+
+#get, post
+class CategoriaList(generics.ListCreateAPIView):
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(
+            queryset,
+            pk = self.kwargs['pk'],
+        )
+
+        return obj
+
+#updtate, delete
+class CategoriaDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
+
+
+#get, post
+class EstadoPedidoList(generics.ListCreateAPIView):
+    queryset = EstadoPedido.objects.all()
+    serializer_class = EstadoPedidoSerializer
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(
+            queryset,
+            pk = self.kwargs['pk'],
+        )
+
+        return obj
+
+#updtate, delete
+class EstadoPedidoDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = EstadoPedido.objects.all()
+    serializer_class = EstadoPedidoSerializer
+
+
+#get, post
+class PedidoList(generics.ListCreateAPIView):
+    queryset = Pedido.objects.all()
+    serializer_class = PedidoSerializer
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(
+            queryset,
+            pk = self.kwargs['pk'],
+        )
+
+        return obj
+
+#updtate, delete
+class PedidoDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Pedido.objects.all()
+    serializer_class = PedidoSerializer
+
+
+#get, post
+class ArticuloPedidoList(generics.ListCreateAPIView):
+    queryset = ArticuloPedido.objects.all()
+    serializer_class = ArticuloPedidoSerializer
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(
+            queryset,
+            pk = self.kwargs['pk'],
+        )
+
+        return obj
+
+#updtate, delete
+class ArticuloPedidoDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ArticuloPedido.objects.all()
+    serializer_class = ArticuloPedidoSerializer
+
+
+#get, post
+class TipoPagoList(generics.ListCreateAPIView):
+    queryset = TipoPago.objects.all()
+    serializer_class = TipoPagoSerializer
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(
+            queryset,
+            pk = self.kwargs['pk'],
+        )
+
+        return obj
+
+#updtate, delete
+class TipoPagoDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = TipoPago.objects.all()
+    serializer_class = TipoPagoSerializer
+
+
+#get, post
+class PagoList(generics.ListCreateAPIView):
+    queryset = Pago.objects.all()
+    serializer_class = PagoSerializer
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(
+            queryset,
+            pk = self.kwargs['pk'],
+        )
+
+        return obj
+
+#updtate, delete
+class PagoDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Pago.objects.all()
+    serializer_class = PagoSerializer
+
+
+#get, post
+class PublicacionList(generics.ListCreateAPIView):
+    queryset = Publicacion.objects.all()
+    serializer_class = PublicacionSerializer
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(
+            queryset,
+            pk = self.kwargs['pk'],
+        )
+
+        return obj
+
+#updtate, delete
+class PublicacionDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Publicacion.objects.all()
+    serializer_class = PublicacionSerializer
+
+
+#get, post
+class PuntuacionVendedorList(generics.ListCreateAPIView):
+    queryset = PuntuacionVendedor.objects.all()
+    serializer_class = PuntuacionSerializer
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(
+            queryset,
+            pk = self.kwargs['pk'],
+        )
+
+        return obj
+
+#updtate, delete
+class PuntuacionVendedorDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PuntuacionVendedor.objects.all()
+    serializer_class = PuntuacionSerializer
 
     
