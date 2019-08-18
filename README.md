@@ -7,6 +7,8 @@ pip install django-filter  # Filtering support<br />
 
 pip install django-widget-tweaks <br /><br />
 
+pip install cryptography <br /><br />
+
 vistas:<br />
 <ul>
 <li>/ </li>
