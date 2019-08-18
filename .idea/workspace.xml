@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ffd40c38-030b-4544-86cd-05899860033d" name="Default Changelist" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Buy/models.py" afterPath="$PROJECT_DIR$/Buy/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Buy/serializar.py" afterPath="$PROJECT_DIR$/Buy/serializar.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Buy/urls.py" afterPath="$PROJECT_DIR$/Buy/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Buy/views.py" afterPath="$PROJECT_DIR$/Buy/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proyecto/settings.py" afterPath="$PROJECT_DIR$/proyecto/settings.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,6 +14,16 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/proyecto/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="42" column="20" lean-forward="true" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="serializar.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Buy/serializar.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -34,7 +40,7 @@
         <entry file="file://$PROJECT_DIR$/Buy/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="561">
-              <caret line="33" column="33" lean-forward="true" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+              <caret line="33" column="33" lean-forward="false" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -44,7 +50,7 @@
         <entry file="file://$PROJECT_DIR$/Buy/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="452">
-              <caret line="266" column="9" lean-forward="true" selection-start-line="266" selection-start-column="9" selection-end-line="266" selection-end-column="9" />
+              <caret line="266" column="9" lean-forward="false" selection-start-line="266" selection-start-column="9" selection-end-line="266" selection-end-column="9" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -52,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Buy/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="503">
-              <caret line="39" column="79" lean-forward="true" selection-start-line="39" selection-start-column="79" selection-end-line="39" selection-end-column="79" />
+              <caret line="39" column="79" lean-forward="false" selection-start-line="39" selection-start-column="79" selection-end-line="39" selection-end-column="79" />
               <folding />
             </state>
           </provider>
@@ -77,6 +83,7 @@
       <find>res</find>
       <find>descripc</find>
       <find>allo</find>
+      <find>cors</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -91,13 +98,13 @@
         <option value="$PROJECT_DIR$/Buy/forms.py" />
         <option value="$PROJECT_DIR$/Buy/templates/contact.html" />
         <option value="$PROJECT_DIR$/Buy/templates/email_content.html" />
-        <option value="$PROJECT_DIR$/proyecto/settings.py" />
         <option value="$PROJECT_DIR$/proyecto/urls.py" />
         <option value="$PROJECT_DIR$/proyecto/__init__.py" />
         <option value="$PROJECT_DIR$/Buy/models.py" />
         <option value="$PROJECT_DIR$/Buy/serializar.py" />
         <option value="$PROJECT_DIR$/Buy/views.py" />
         <option value="$PROJECT_DIR$/Buy/urls.py" />
+        <option value="$PROJECT_DIR$/proyecto/settings.py" />
       </list>
     </option>
   </component>
@@ -656,14 +663,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/proyecto/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1472">
-          <caret line="139" column="35" lean-forward="true" selection-start-line="139" selection-start-column="35" selection-end-line="139" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Buy/serializar.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="554">
@@ -677,7 +676,7 @@
     <entry file="file://$PROJECT_DIR$/Buy/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
-          <caret line="33" column="33" lean-forward="true" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+          <caret line="33" column="33" lean-forward="false" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
           <folding />
         </state>
       </provider>
@@ -685,7 +684,7 @@
     <entry file="file://$PROJECT_DIR$/Buy/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="452">
-          <caret line="266" column="9" lean-forward="true" selection-start-line="266" selection-start-column="9" selection-end-line="266" selection-end-column="9" />
+          <caret line="266" column="9" lean-forward="false" selection-start-line="266" selection-start-column="9" selection-end-line="266" selection-end-column="9" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
@@ -695,7 +694,15 @@
     <entry file="file://$PROJECT_DIR$/Buy/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="503">
-          <caret line="39" column="79" lean-forward="true" selection-start-line="39" selection-start-column="79" selection-end-line="39" selection-end-column="79" />
+          <caret line="39" column="79" lean-forward="false" selection-start-line="39" selection-start-column="79" selection-end-line="39" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proyecto/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="42" column="20" lean-forward="true" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
           <folding />
         </state>
       </provider>
