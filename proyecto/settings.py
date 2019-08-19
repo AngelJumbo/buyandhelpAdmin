@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'proyecto.wsgi.application'
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'DBbuy',
+            'NAME': 'DBbuy2',
             'USER': 'root',
             'PASSWORD': 'root',
             'HOST': 'localhost',

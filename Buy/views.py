@@ -8,6 +8,8 @@ from .forms import ContactForm
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 # Create your views here.
 #index
@@ -273,4 +275,6 @@ class PuntuacionVendedorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = PuntuacionVendedor.objects.all()
     serializer_class = PuntuacionSerializer
 
-    
+
+
+
