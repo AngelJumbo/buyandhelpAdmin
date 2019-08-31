@@ -1,57 +1,57 @@
 from .models import *
 from rest_framework import serializers
 
-class ArticuloSerializer(serializers.HyperlinkedModelSerializer):
+class ArticuloSerializer(serializers.ModelSerializer):
     class Meta:
         model = Articulo
         fields = '__all__'
 
-class RolSerializer(serializers.HyperlinkedModelSerializer):
+class RolSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rol
         fields = '__all__'
 
-class UsuarioSerializer(serializers.HyperlinkedModelSerializer):
+class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = '__all__'
 
-class CategoriaSerializer(serializers.HyperlinkedModelSerializer):
+class CategoriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categoria
         fields = '__all__'
 
-class EstadoPedidoSerializer(serializers.HyperlinkedModelSerializer):
+class EstadoPedidoSerializer(serializers.ModelSerializer):
     class Meta:
         model = EstadoPedido
         fields = '__all__'
 
-class PedidoSerializer(serializers.HyperlinkedModelSerializer):
+class PedidoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pedido
         fields = '__all__'
 
-class ArticuloPedidoSerializer(serializers.HyperlinkedModelSerializer):
+class ArticuloPedidoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Articulo
+        model = ArticuloPedido
         fields = '__all__'
 
-class TipoPagoSerializer(serializers.HyperlinkedModelSerializer):
+class TipoPagoSerializer(serializers.ModelSerializer):
     class Meta:
         model = TipoPago
         fields = '__all__'
 
-class PagoSerializer(serializers.HyperlinkedModelSerializer):
+class PagoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pago
         fields = '__all__'
 
-class PublicacionSerializer(serializers.HyperlinkedModelSerializer):
+class PublicacionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Pago
+        model = Publicacion
         fields = '__all__'
 
-class PuntuacionSerializer(serializers.HyperlinkedModelSerializer):
+class PuntuacionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Pago
+        model = PuntuacionVendedor
         fields = '__all__'

@@ -21,23 +21,23 @@ urlpatterns = [
     url(r'^estadopedido/$', EstadoPedidoList.as_view(), name='estadopedido'),
     url(r'^estadopedido/(?P<pk>[0-9]+)/$', EstadoPedidoDetail.as_view()),
 
-    url(r'^pedido/$', EstadoPedidoList.as_view(), name='pedido'),
-    url(r'^pedido/(?P<pk>[0-9]+)/$', EstadoPedidoDetail.as_view()),
+    url(r'^pedido/$', PedidoList.as_view(), name='pedido'),
+    url(r'^pedido/(?P<pk>[0-9]+)/$', PedidoDetail.as_view()),
 
-    url(r'^articulospedido/$', EstadoPedidoList.as_view(), name='articulospedido'),
-    url(r'^articulospedido/(?P<pk>[0-9]+)/$', EstadoPedidoDetail.as_view()),
+    url(r'^articulospedido/$', ArticuloPedidoList.as_view(), name='articulospedido'),
+    url(r'^articulospedido/(?P<pk>[0-9]+)/$', ArticuloPedidoDetail.as_view()),
 
-    url(r'^tipopago/$', EstadoPedidoList.as_view(), name='tipopago'),
-    url(r'^tipopago/(?P<pk>[0-9]+)/$', EstadoPedidoDetail.as_view()),
+    url(r'^tipopago/$', TipoPagoList.as_view(), name='tipopago'),
+    url(r'^tipopago/(?P<pk>[0-9]+)/$', TipoPagoDetail.as_view()),
 
-    url(r'^pago/$', EstadoPedidoList.as_view(), name='pago'),
-    url(r'^pago/(?P<pk>[0-9]+)/$', EstadoPedidoDetail.as_view()),
+    url(r'^pago/$', PagoList.as_view(), name='pago'),
+    url(r'^pago/(?P<pk>[0-9]+)/$', PagoDetail.as_view()),
 
-    url(r'^publicacion/$', EstadoPedidoList.as_view(), name='publicacion'),
-    url(r'^publicacion/(?P<pk>[0-9]+)/$', EstadoPedidoDetail.as_view()),
+    url(r'^publicacion/$', PublicacionList.as_view(), name='publicacion'),
+    url(r'^publicacion/(?P<pk>[0-9]+)/$', PublicacionDetail.as_view()),
 
-    url(r'^puntuacionvendedor/$', EstadoPedidoList.as_view(), name='puntuacionvendedor'),
-    url(r'^puntuacionvendedor/(?P<pk>[0-9]+)/$', EstadoPedidoDetail.as_view()),
+    url(r'^puntuacionvendedor/$', PuntuacionVendedorList.as_view(), name='puntuacionvendedor'),
+    url(r'^puntuacionvendedor/(?P<pk>[0-9]+)/$', PuntuacionVendedorDetail.as_view()),
 
 
 
