@@ -18,7 +18,7 @@ class Usuario(models.Model):
     nombres= models.CharField(max_length=20)
     apellidos= models.CharField(max_length=20)
     email= models.CharField(max_length=20)
-    direccion=models.CharField(max_length=40)
+    direccion=models.CharField(max_length=80)
 
     def __str__(self):
         return '%s: %s %s' % (self.id_usuario, self.nombres, self.apellidos)
@@ -41,7 +41,7 @@ class Articulo(models.Model):
     descrip = models.CharField(max_length=100)
 
     def __str__(self):
-        return '%s: %s - %s' % (self.id_articulo, self.nombre, self.precio)
+        return '%s: %s - $%s' % (self.id_articulo, self.nombre, self.precio)
 
 class EstadoPedido(models.Model):
     id_estado_pedido= models.AutoField(primary_key=True)
@@ -60,7 +60,7 @@ class Pedido(models.Model):
     id_vendedor= models.ForeignKey(Usuario, default=1, on_delete=models.SET_DEFAULT,related_name = 'vendedor_pedido')
 
     def __str__(self):
-        return '%s: %s - %s' % (self.id_pedido, self.fecha, self.total_venta)
+        return '%s: %s - $%s' % (self.id_pedido, self.fecha, self.total_venta)
 
 class ArticuloPedido(models.Model):
     id_articulo_pedido= models.AutoField(primary_key=True)

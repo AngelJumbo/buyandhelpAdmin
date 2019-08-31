@@ -142,8 +142,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 #correo settings
 EMAIL_HOST= 'smtp-mail.outlook.com'
-EMAIL_HOST_USER= 'milton.garcia1998@hotmail.com'
-EMAIL_HOST_PASSWORD= 'mukuroXchrome'
+EMAIL_HOST_USER= 'user@hotmail.com'
+EMAIL_HOST_PASSWORD= 'password'
 EMAIL_USE_TLS= True
 EMAIL_PORT= 587
 
