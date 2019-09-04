@@ -2,6 +2,7 @@ from django.urls import path
 from .views import index1
 from django.conf.urls import url
 from .views import *
+from django.conf.urls import handler404
 
 
 urlpatterns = [
@@ -39,8 +40,8 @@ urlpatterns = [
     url(r'^puntuacionvendedor/$', PuntuacionVendedorList.as_view(), name='puntuacionvendedor'),
     url(r'^puntuacionvendedor/(?P<pk>[0-9]+)/$', PuntuacionVendedorDetail.as_view()),
 
-
-
-
     path('contact', ContactView.as_view(),name='contact'),
+    path('apis', apis,name='apis'),
 ]
+
+handler404 = 'Buy.views.handler404'

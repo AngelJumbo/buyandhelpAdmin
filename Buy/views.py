@@ -11,12 +11,22 @@ from django.core.mail import EmailMessage
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+
 # Create your views here.
 #index
+
 def index1(request):
     return render(request, "index.html")
 
+def apis(request):
+    return render(request, "apis.html")
+
+def handler404(request, exception):
+    data = {}
+    return render(request, 'myapp/404.html', data)
+
 #formulario contactenos
+
 class ContactView(TemplateView):
     template_name = 'contact.html'
 
@@ -25,6 +35,7 @@ class ContactView(TemplateView):
         context['contact_form'] = ContactForm()
 
         return context
+        
 
     def post(self, request, *args, **kwargs):
         name = request.POST.get('name')

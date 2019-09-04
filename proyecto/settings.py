@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '4@qn_&=bae+jy(n6bm6!hddyi-cp6gr1mp(=(xav*coe7$p4(s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com','localhost' ]
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com','localhost',"*" ]
 
 
 # Application definition
@@ -50,13 +50,15 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+
 
 ROOT_URLCONF = 'proyecto.urls'
 
@@ -142,8 +144,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 #correo settings
 EMAIL_HOST= 'smtp-mail.outlook.com'
-EMAIL_HOST_USER= 'user@hotmail.com'
-EMAIL_HOST_PASSWORD= 'password'
+EMAIL_HOST_USER= 'milton.garcia1998@hotmail.com'
+EMAIL_HOST_PASSWORD= 'mukuroXchrome'
 EMAIL_USE_TLS= True
 EMAIL_PORT= 587
 
