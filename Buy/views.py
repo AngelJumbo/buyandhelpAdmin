@@ -71,7 +71,7 @@ class ContactView(TemplateView):
             subject='Mensaje de usuario',
             body=body,
             from_email='milton.garcia1998@hotmail.com',
-            to=['milton.garcia1998@hotmail.com'],
+            to=['milton.garcia1998@hotmail.com','adanavarrete15@gmail.com'],
         )
         email_message.content_subtype = 'html'
         email_message.send()
@@ -355,13 +355,21 @@ class ArticuloListComprador(APIView):
         return Response(serializer.data)
 
     def post(self,request):
+        
+        print("post !!!!!!!!!!!", flush=True)
         if(Articulo.objects.filter(id_articulo=request.data.get('id_articulo')).exists()):
+            print("post2 !!!!!!!!!!!", flush=True)
             articulo=Articulo.objects.get(id_articulo=request.data.get('id_articulo'))
+            print("post2 !!!!!!!!!!!", flush=True)
             articulo.id_categoria=Categoria.objects.get(id_categoria=request.data.get('id_categoria'))
+            print("post2 !!!!!!!!!!!", flush=True)
             articulo.nombre=request.data.get('nombre')
-            articulo.precio=request.data.get('precio'),
+            print("post2 !!!!!!!!!!!", flush=True)
+            articulo.precio=request.data.get('precio')
+            print("post2 !!!!!!!!!!!", flush=True)
             articulo.donacion=request.data.get('donacion')
             articulo.descrip=request.data.get('descrip')
+            articulo.save()
 
             if(not (request.data.get('imagen') is None)):
                 imagenAnterior=Imagen.objects.get(id_articulo=articulo.id_articulo)
