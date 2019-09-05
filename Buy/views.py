@@ -11,6 +11,19 @@ from django.core.mail import EmailMessage
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+#!!!!!!
+
+from rest_framework import viewsets as meview
+from rest_framework import status
+from django.http import HttpResponse
+from .models import Usuario as UsuarioModel
+from .models import Imagen
+from django.core import serializers
+from django.forms.models import model_to_dict
+import json
+from base64 import b64decode
+from django.core.files.base import ContentFile
+
 
 # Create your views here.
 #index
@@ -286,6 +299,134 @@ class PuntuacionVendedorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = PuntuacionVendedor.objects.all()
     serializer_class = PuntuacionSerializer
 
+
+
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+class Usuario(APIView):
+    def get(self, request):
+        usuarios = UsuarioModel.objects.all()
+        serializer = UsuarioSerializer(usuarios, many=True)
+        return Response(serializer.data)
+
+    def post(self,request):
+        UsuarioModel.objects.create(
+            id_rol=Rol.objects.get(pk=request.data.get('id_rol')),
+            cedula=request.data.get('cedula'),
+            contrasenia=request.data.get('contrasenia'),
+            nombres=request.data.get('nombres'),
+            apellidos=request.data.get('apellidos'),
+            email=request.data.get('email'),
+            direccion=request.data.get('direccion'))
+        return HttpResponse(status=201)
+
+
+class CategoriaList2(APIView):
+    def get(self, request):
+        categorias=Categoria.objects.all()
+        serializer=CategoriaSerializer(categorias,many=True)
+        return Response(serializer.data)
+
+    def post(self):
+        pass
+
+
+class ArticuloList(APIView):
+    def get(self, request):
+        articulos=Articulo.objects.all()
+        #imagenes=Imagen.objects.all()
+        serializer=ArticuloSerializer2(articulos,many=True)
+        return Response(serializer.data)
+
+    def post(self,request):
+        pass
+
+class ArticuloListComprador(APIView):
+
+    def get_object(self, pk):
+        try:
+            return Articulo.objects.get(pk=pk)
+        except Articulo.DoesNotExist:
+            raise Http404
+
+    def get(self, request):
+        articulos=Articulo.objects.filter(id_usuario=request.GET['id_usuario'])
+        serializer=ArticuloSerializer2(articulos,many=True)
+        return Response(serializer.data)
+
+    def post(self,request):
+        if(Articulo.objects.filter(id_articulo=request.data.get('id_articulo')).exists()):
+            articulo=Articulo.objects.get(id_articulo=request.data.get('id_articulo'))
+            articulo.id_categoria=Categoria.objects.get(id_categoria=request.data.get('id_categoria'))
+            articulo.nombre=request.data.get('nombre')
+            articulo.precio=request.data.get('precio'),
+            articulo.donacion=request.data.get('donacion')
+            articulo.descrip=request.data.get('descrip')
+
+            if(not (request.data.get('imagen') is None)):
+                imagenAnterior=Imagen.objects.get(id_articulo=articulo.id_articulo)
+                imagenAnterior.delete()
+                imagenArchi=b64decode(request.data.get('imagen'))
+                Imagen.objects.create(
+                    id_articulo=articulo,
+                    imagen=ContentFile(imagenArchi,request.data.get('imagen_nombre')))
+
+                return HttpResponse(status=201)
+
+
+        else:
+            articulo=Articulo.objects.create(
+                id_usuario=UsuarioModel.objects.get(id_usuario=request.data.get('id_usuario')),
+                id_categoria=Categoria.objects.get(id_categoria=request.data.get('id_categoria')),
+                nombre=request.data.get('nombre'),
+                precio=request.data.get('precio'),
+                donacion=request.data.get('donacion'),
+                descrip=request.data.get('descrip'))
+            imagenArchi=b64decode(request.data.get('imagen'))
+            Imagen.objects.create(
+                id_articulo=articulo,
+                imagen=ContentFile(imagenArchi,request.data.get('imagen_nombre')))
+
+            return HttpResponse(status=201)
+
+    def delete(self, request):
+
+        articulo=Articulo.objects.get(id_articulo=request.GET['id_articulo'])
+        articulo.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class buscarUsuario(APIView):
+    def get(self, request):
+        usuario = UsuarioModel.objects.get(cedula=request.GET['cedula'])
+        serialized_obj = UsuarioSerializer(usuario, many=False)
+        #serialized_obj = serializers.serialize('json', [ usuario, ])
+        #dict_obj = model_to_dict( usuario )
+        #serialized_obj = json.dumps(dict_obj)
+        
+        #return HttpResponse(serialized_obj, mimetype='application/json')
+        return Response(serialized_obj.data)
+
+class comprobarUsuario(APIView):
+    def post(self,request):
+
+        #request.data.get('id_rol')
+        usuario=UsuarioModel.objects.get(cedula=request.data.get('cedula'),contrasenia=request.data.get('contrasenia'))
+        serialized_obj = UsuarioSerializer(usuario, many=False)
+
+        return Response(serialized_obj.data)
+
+class imagenes(APIView):
+    def get(self, request):
+
+
+        imagenes = Imagen.objects.filter(id_articulo="id_articulo")
+        serializer=ImagenSerializer(imagenes,many=True)
+        #serialized_obj = serializers.serialize('json', [ usuario, ])
+        #dict_obj = model_to_dict( usuario )
+        #serialized_obj = json.dumps(dict_obj)
+        
+        #return HttpResponse(serialized_obj, mimetype='application/json')
+        return Response(serializer.data)
 
 
 

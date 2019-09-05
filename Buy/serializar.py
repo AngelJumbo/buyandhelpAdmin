@@ -1,6 +1,23 @@
 from .models import *
 from rest_framework import serializers
 
+class ImagenSerializer(serializers.ModelSerializer):
+    imagen=serializers.ImageField(
+            max_length=None, use_url=True
+        )
+    class Meta:
+        model = Imagen
+        fields = ('id_imagen','id_articulo','imagen')
+    
+    
+
+class ArticuloSerializer2(serializers.ModelSerializer):    
+    imagenes = ImagenSerializer(many=True, read_only=True)      
+    class Meta:        
+        model = Articulo         
+        fields = ('id_articulo','id_categoria','id_usuario','nombre','precio','donacion','descrip','imagenes')
+
+
 class ArticuloSerializer(serializers.ModelSerializer):
     class Meta:
         model = Articulo

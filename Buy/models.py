@@ -43,6 +43,15 @@ class Articulo(models.Model):
     def __str__(self):
         return '%s: %s - $%s' % (self.id_articulo, self.nombre, self.precio)
 
+
+class Imagen(models.Model):
+    id_imagen=models.AutoField(primary_key=True)     
+    imagen=models.ImageField(upload_to='imagenes/',blank=False, null=False)
+    id_articulo=models.ForeignKey(Articulo,default=1,on_delete=models.CASCADE,related_name="imagenes",)
+
+    def __str__(self):        
+        return self.id_articulo.nombre
+
 class EstadoPedido(models.Model):
     id_estado_pedido= models.AutoField(primary_key=True)
     tipo=models.CharField(max_length=10)

@@ -17,7 +17,12 @@ from django.contrib import admin
 from django.conf.urls import url, include
 from django.urls import path,include
 from django.conf import settings
-from rest_framework.authtoken import views
+#from rest_framework.authtoken import views
+
+#!!
+from rest_framework.urlpatterns import format_suffix_patterns
+from Buy import views
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -25,8 +30,20 @@ urlpatterns = [
     url('admin/', admin.site.urls),
     path('', include('Buy.urls')),
     #url('django-sb-admin/', include('django_sb_admin.urls')),
+    #!!!!!!!!!!!!!!!!!!!!!!!!!
+    path('categorias/', views.CategoriaList2.as_view()),
+    path('todosLosArticulos/', views.ArticuloList.as_view()),
+    path('articulosComprador/', views.ArticuloListComprador.as_view()),
+    path('articulosComprador/(?P<pk>[0-9]+)/$', views.ArticuloListComprador.as_view()),
+    path('usuario/', views.Usuario.as_view()),
+    path('usuario/(?P<pk>[0-9]+)/$', views.Usuario.as_view()),
+    path('buscarUsuario/', views.buscarUsuario.as_view()),
+    path('buscarUsuario/(?P<pk>[0-9]+)/$', views.buscarUsuario.as_view()),
+    path('comprobarUsuario/', views.comprobarUsuario.as_view()),
+    path('comprobarUsuario/(?P<pk>[0-9]+)/$', views.comprobarUsuario.as_view()),
+    path('imagenes/', views.imagenes.as_view()),
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += [
     url('api/auth',include('rest_framework.urls'))
 ]

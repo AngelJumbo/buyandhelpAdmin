@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '4@qn_&=bae+jy(n6bm6!hddyi-cp6gr1mp(=(xav*coe7$p4(s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com','localhost',"*" ]
 
@@ -135,11 +135,18 @@ USE_L10N = True
 USE_TZ = True
 
 
+CORS_ORIGIN_ALLOW_ALL=True
+
+CSRF_COOKIE_SECURE=True
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_ROOT  = os.path.join(BASE_DIR, 'imagenes')
+MEDIA_URL = '/imagenes/'
 
 
 #correo settings
@@ -148,4 +155,7 @@ EMAIL_HOST_USER= 'milton.garcia1998@hotmail.com'
 EMAIL_HOST_PASSWORD= 'mukuroXchrome'
 EMAIL_USE_TLS= True
 EMAIL_PORT= 587
+
+
+
 
