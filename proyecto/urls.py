@@ -34,13 +34,13 @@ urlpatterns = [
     path('categorias/', views.CategoriaList2.as_view()),
     path('todosLosArticulos/', views.ArticuloList.as_view()),
     path('articulosComprador/', views.ArticuloListComprador.as_view()),
-    path('articulosComprador/(?P<pk>[0-9]+)/$', views.ArticuloListComprador.as_view()),
+    path('articulosComprador/<int:pk>/', views.ArticuloListComprador.as_view()),
     path('usuario/', views.Usuario.as_view()),
-    path('usuario/(?P<pk>[0-9]+)/$', views.Usuario.as_view()),
+    path('usuario/<int:pk>/', views.Usuario.as_view()),
     path('buscarUsuario/', views.buscarUsuario.as_view()),
-    path('buscarUsuario/(?P<pk>[0-9]+)/$', views.buscarUsuario.as_view()),
+    path('buscarUsuario/<int:pk>/', views.buscarUsuario.as_view()),
     path('comprobarUsuario/', views.comprobarUsuario.as_view()),
-    path('comprobarUsuario/(?P<pk>[0-9]+)/$', views.comprobarUsuario.as_view()),
+    path('comprobarUsuario/<int:pk>/', views.comprobarUsuario.as_view()),
     path('imagenes/', views.imagenes.as_view()),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

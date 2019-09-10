@@ -31,17 +31,16 @@ ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com','localhost',"*" ]
 # Application definition
 
 INSTALLED_APPS = [
+    'Buy',
+    'rest_framework',
+    'widget_tweaks',
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'Buy.apps.BuyConfig',
-    'rest_framework',
-    'Buy',
-    'widget_tweaks',
-    'corsheaders',
 ]
 
 
@@ -136,7 +135,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es-es'
 
-TIME_ZONE = 'Europe/Berlin'
+# TIME_ZONE = 'Europe/Berlin'
 
 USE_I18N = True
 

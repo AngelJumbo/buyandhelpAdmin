@@ -1,6 +1,18 @@
+# IDE
 .idea
-.vscode
+.vscode/
+
+# Enviroments
 venv
 myvenv
+
+# Python Cache
 __pycache__/
+
+# Mac Temps
 .DS_Store
+
+# Django migrations files
+migrations/
+
+db.sqlite3

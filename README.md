@@ -1,15 +1,31 @@
 # buyandhelpAdmin
-necesario instalar:<br />
 
-pip install djangorestframework<br />
-pip install markdown       # Markdown support for the browsable API.<br />
-pip install django-filter  # Filtering support<br />
+## Levantar servicio
 
-pip install django-widget-tweaks <br /><br />
-
-pip install cryptography <br /><br />
-
-pip install django-cors-headers  <br /><br />
+1. Crear `Virtual Enviroment`
+```bash
+$ python3 -m venv venv
+```
+2. Activar `Virtual Enviroment`
+```bash
+$ source venv/bin/activate
+```
+3. Instalar requerimientos
+```bash
+$ pip install -r requirements.txt
+```
+4. Crear migraciones
+```bash
+$ python manage.py makemigrations Buy
+```
+5. Ejecutar migraciones
+```bash
+$ python manage.py migrate
+```
+6. Correr servicio
+```bash
+$ python manage.py runserver
+```
 
 vistas:<br />
 <ul>
