@@ -2,5 +2,5 @@
 .vscode
 venv
 myvenv
-_pycache_
+__pycache__/
 .DS_Store
