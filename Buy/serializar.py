@@ -23,10 +23,10 @@ class ArticuloSerializer(serializers.ModelSerializer):
         model = Articulo
         fields = '__all__'
 
-class RolSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Rol
-        fields = '__all__'
+# class RolSerializer(serializers.ModelSerializer):
+#    class Meta:
+#        model = Rol
+#        fields = '__all__'
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:

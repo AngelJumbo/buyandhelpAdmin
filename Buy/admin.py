@@ -1,9 +1,9 @@
 from django.contrib import admin
-from Buy.models import Rol,Usuario,Categoria,Articulo,EstadoPedido,Pedido,ArticuloPedido,TipoPago,Pago,Publicacion,PuntuacionVendedor,Imagen
+from Buy.models import Usuario,Categoria,Articulo,EstadoPedido,Pedido,ArticuloPedido,TipoPago,Pago,Publicacion,PuntuacionVendedor,Imagen
 
 # Register your models here.
 
-admin.site.register(Rol)
+# admin.site.register(Rol)
 admin.site.register(Usuario)
 admin.site.register(Categoria)
 admin.site.register(Articulo)

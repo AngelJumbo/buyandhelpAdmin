@@ -10,8 +10,8 @@ urlpatterns = [
     url(r'^articulos/$',ArticulosList.as_view(), name ='articulos'),
     url(r'^articulos/<int:pk>/', ArticulosDetail.as_view()),
 
-    url(r'^roles/$',RolList.as_view(), name ='roles'),
-    url(r'^roles/<int:pk>/$', RolDetail.as_view()),
+    # url(r'^roles/$',RolList.as_view(), name ='roles'),
+    # url(r'^roles/<int:pk>/$', RolDetail.as_view()),
 
     url(r'^usuarios/$', UsuarioList.as_view(), name='usuarios'),
     url(r'^usuarios/<int:pk>/$', UsuarioDetail.as_view()),

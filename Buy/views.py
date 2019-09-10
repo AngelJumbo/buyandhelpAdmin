@@ -101,6 +101,7 @@ class ArticulosDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 #get, post
+'''
 class RolList(generics.ListCreateAPIView):
     queryset = Rol.objects.all()
     serializer_class = RolSerializer
@@ -114,11 +115,12 @@ class RolList(generics.ListCreateAPIView):
 
         return obj
 
+
 #updtate, delete
 class RolDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Rol.objects.all()
     serializer_class = RolSerializer
-
+'''
 
 #get, post
 class UsuarioList(generics.ListCreateAPIView):
@@ -311,7 +313,7 @@ class Usuario(APIView):
 
     def post(self,request):
         UsuarioModel.objects.create(
-            id_rol=Rol.objects.get(pk=request.data.get('id_rol')),
+            rol=request.data.get('rol'),
             cedula=request.data.get('cedula'),
             contrasenia=request.data.get('contrasenia'),
             nombres=request.data.get('nombres'),
