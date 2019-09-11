@@ -2,18 +2,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.utils import timezone
+from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
+
 
 # Create your models here.
-
-''' 
-class Rol(models.Model):
-    id_rol=models.AutoField(primary_key=True)
-    tipo = models.CharField(max_length=10)
-    descripcion = models.CharField(max_length=50)
-
-    def __str__(self):
-        return '%s: %s' % (self.id_rol, self.tipo)
-'''
 
 VENDEDOR = 'VEN'
 COMPRADOR = 'COM'
@@ -23,11 +16,11 @@ roles = (
 )
 
 class Usuario(AbstractUser):
+    username = models.CharField(blank=True, null=True, max_length=15, unique=True)
+    email = models.EmailField(_('email adress'), unique=True)
 
-    regex_cedula = r'[0-9]{10}'
-    rol = models.CharField(choices=roles, max_length=5, null=False, blank=False, default='COM')
-    cedula= models.CharField(max_length=10, validators=[RegexValidator(regex_cedula)], null=False, blank=False)
-    direccion=models.CharField(max_length=80, null=True, blank=True)
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
 
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name)
@@ -39,6 +32,15 @@ class Categoria(models.Model):
 
     def __str__(self):
         return self.nombre
+
+
+class Perfil(models.Model):
+    usuario = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='perfil')
+    regex_cedula = r'[0-9]{10}'
+    rol = models.CharField(choices=roles, max_length=5, null=False, blank=False, default='COM')
+    cedula= models.CharField(max_length=10, validators=[RegexValidator(regex_cedula)], null=False, blank=False)
+    direccion=models.CharField(max_length=80, null=True, blank=True)
+
 
 
 class Articulo(models.Model):
@@ -73,7 +75,7 @@ estados = (
 
 class Pedido(models.Model):
     estado_pedido = models.CharField(max_length=10, null=False, blank=False, choices=estados, default='EMP')
-    fecha=models.DateField(default=timezone.now().date(), null=False, blank=False)
+    fecha=models.DateField(default=timezone.now(), null=False, blank=False)
     total_venta=models.FloatField(default=0.0, validators=[MinValueValidator(0.0)], null=False, blank=False)
     comprador=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name = 'comprador_pedido', null=False, blank=False)
     vendedor= models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name = 'vendedor_pedido', null=False, blank=False)
@@ -111,7 +113,7 @@ class Pago(models.Model):
 class Publicacion(models.Model):
     vendedor=models.ForeignKey(Usuario,on_delete=models.CASCADE, null=False, blank=False)
     articulo=models.ForeignKey(Articulo,on_delete=models.CASCADE, null=False, blank=False)
-    fecha_publicacion=models.DateField(default=timezone.now().date(), null=True, blank=True)
+    fecha_publicacion=models.DateField(default=timezone.now(), null=True, blank=True)
 
     def __str__(self):
         return '{} - {}'.format(self.vendedor.__str__(), self.articulo.__str__())

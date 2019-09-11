@@ -19,6 +19,7 @@ from django.urls import path,include
 from django.conf import settings
 #from rest_framework.authtoken import views
 
+from django.views.generic.base import RedirectView
 #!!
 from rest_framework.urlpatterns import format_suffix_patterns
 from Buy import views
@@ -26,9 +27,9 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    url('api/', include('Buy.urls')),
-    url('admin/', admin.site.urls),
-    path('', include('Buy.urls')),
+    path('api/', include('Buy.urls')),
+    path('admin/', admin.site.urls),
+    path('', RedirectView.as_view(url='api/', permanent=False), name="index"),
     #url('django-sb-admin/', include('django_sb_admin.urls')),
     #!!!!!!!!!!!!!!!!!!!!!!!!!
     path('categorias/', views.CategoriaList2.as_view()),
@@ -42,8 +43,4 @@ urlpatterns = [
     path('comprobarUsuario/', views.comprobarUsuario.as_view()),
     path('comprobarUsuario/<int:pk>/', views.comprobarUsuario.as_view()),
     path('imagenes/', views.imagenes.as_view()),
-
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += [
-    url('api/auth',include('rest_framework.urls'))
 ]

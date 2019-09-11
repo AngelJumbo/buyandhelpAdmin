@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import *
-from .serializar import *
+from .serializers import *
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from .forms import ContactForm
@@ -11,16 +10,10 @@ from django.core.mail import EmailMessage
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-#!!!!!!
-
-from rest_framework import viewsets as meview
-from rest_framework import status
+from rest_framework import status, viewsets
 from django.http import HttpResponse
 from .models import Usuario as UsuarioModel
 from .models import Imagen
-from django.core import serializers
-from django.forms.models import model_to_dict
-import json
 from base64 import b64decode
 from django.core.files.base import ContentFile
 
@@ -36,7 +29,7 @@ def apis(request):
 
 def handler404(request, exception):
     data = {}
-    return render(request, 'myapp/404.html', data)
+    return render(request, '404.html', data)
 
 #formulario contactenos
 
@@ -100,46 +93,19 @@ class ArticulosDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ArticuloSerializer
 
 
-#get, post
-'''
-class RolList(generics.ListCreateAPIView):
-    queryset = Rol.objects.all()
-    serializer_class = RolSerializer
+class UsuariosViewSet(viewsets.ViewSet):
 
-    def get_object(self):
-        queryset = self.get_queryset()
-        obj = get_object_or_404(
-            queryset,
-            pk = self.kwargs['pk'],
-        )
+    def list(self, request, *args, **kwargs):
+        queryset = UsuarioModel.objects.all()
+        serializer = UsuarioSerializerDetail(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-        return obj
-
-
-#updtate, delete
-class RolDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Rol.objects.all()
-    serializer_class = RolSerializer
-'''
-
-#get, post
-class UsuarioList(generics.ListCreateAPIView):
-    queryset = Usuario.objects.all()
-    serializer_class = UsuarioSerializer
-
-    def get_object(self):
-        queryset = self.get_queryset()
-        obj = get_object_or_404(
-            queryset,
-            pk = self.kwargs['pk'],
-        )
-
-        return obj
-
-#updtate, delete
-class UsuarioDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Usuario.objects.all()
-    serializer_class = UsuarioSerializer
+    def create(self, request, *args, **kwargs):
+        serializer = UsuarioSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 #get, post
@@ -160,26 +126,6 @@ class CategoriaList(generics.ListCreateAPIView):
 class CategoriaDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer
-
-
-#get, post
-class EstadoPedidoList(generics.ListCreateAPIView):
-    queryset = EstadoPedido.objects.all()
-    serializer_class = EstadoPedidoSerializer
-
-    def get_object(self):
-        queryset = self.get_queryset()
-        obj = get_object_or_404(
-            queryset,
-            pk = self.kwargs['pk'],
-        )
-
-        return obj
-
-#updtate, delete
-class EstadoPedidoDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = EstadoPedido.objects.all()
-    serializer_class = EstadoPedidoSerializer
 
 
 #get, post
@@ -223,26 +169,6 @@ class ArticuloPedidoDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 #get, post
-class TipoPagoList(generics.ListCreateAPIView):
-    queryset = TipoPago.objects.all()
-    serializer_class = TipoPagoSerializer
-
-    def get_object(self):
-        queryset = self.get_queryset()
-        obj = get_object_or_404(
-            queryset,
-            pk = self.kwargs['pk'],
-        )
-
-        return obj
-
-#updtate, delete
-class TipoPagoDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = TipoPago.objects.all()
-    serializer_class = TipoPagoSerializer
-
-
-#get, post
 class PagoList(generics.ListCreateAPIView):
     queryset = Pago.objects.all()
     serializer_class = PagoSerializer
@@ -276,6 +202,7 @@ class PublicacionList(generics.ListCreateAPIView):
 
         return obj
 
+
 #updtate, delete
 class PublicacionDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Publicacion.objects.all()
@@ -295,6 +222,7 @@ class PuntuacionVendedorList(generics.ListCreateAPIView):
         )
 
         return obj
+
 
 #updtate, delete
 class PuntuacionVendedorDetail(generics.RetrieveUpdateDestroyAPIView):
