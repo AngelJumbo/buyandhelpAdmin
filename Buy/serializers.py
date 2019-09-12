@@ -2,25 +2,10 @@ from .models import *
 from rest_framework import serializers
 from .models import Usuario
 
-class ImagenSerializer(serializers.ModelSerializer):
-    imagen=serializers.ImageField(
-            max_length=None, use_url=True
-        )
+
+class CategoriaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Imagen
-        fields = ('id_imagen','id_articulo','imagen')
-    
-
-class ArticuloSerializer2(serializers.ModelSerializer):    
-    imagenes = ImagenSerializer(many=True, read_only=True)      
-    class Meta:        
-        model = Articulo         
-        fields = ('categoria','usuario','nombre','precio','donacion','descrip','imagenes')
-
-
-class ArticuloSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Articulo
+        model = Categoria
         fields = '__all__'
 
 
@@ -59,10 +44,41 @@ class UsuarioSerializerDetail(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'email', 'first_name', 'last_name', 'password', 'username', 'perfil')
 
 
-class CategoriaSerializer(serializers.ModelSerializer):
+
+class ImagenSerializer(serializers.ModelSerializer):
+    imagen=serializers.ImageField(
+            max_length=None, use_url=True
+        )
     class Meta:
-        model = Categoria
-        fields = '__all__'
+        model = Imagen
+        fields = ('id','imagen','articulo','url')
+    
+
+class ArticuloSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Articulo
+        fields = ('id', 'categoria','usuario','nombre','precio','donacion','descrip')
+
+
+class ArticuloSerializerList(serializers.ModelSerializer):
+
+    categoria = CategoriaSerializer()
+    usuario = UsuarioSerializerDetail()
+    class Meta:
+        model = Articulo
+        fields = ('id', 'categoria','usuario','nombre','precio','donacion','descrip')
+
+
+class ArticuloSerializerDetail(serializers.ModelSerializer):
+
+    # imagenes = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='imagen-detail')
+    imagenes = ImagenSerializer(many=True)
+    categoria = CategoriaSerializer(read_only=True)
+    usuario = UsuarioSerializerDetail(read_only=True)
+    class Meta:        
+        model = Articulo         
+        fields = ('categoria','usuario','nombre','precio','donacion','descrip','imagenes')
 
 
 class PedidoSerializer(serializers.ModelSerializer):

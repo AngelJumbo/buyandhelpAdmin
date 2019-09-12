@@ -7,14 +7,21 @@ from django.conf.urls import handler404
 
 urlpatterns = [
     path('', index1, name='index'),
-    path('articulos/',ArticulosList.as_view(), name ='articulos'),
+
+    # Articulos OK
+    path('articulos/',ArticulosList.as_view({'get': 'list', 'post': 'create'}), name ='articulos'),
     path('articulos/<int:pk>/', ArticulosDetail.as_view()),
 
-    path('usuarios/', UsuariosViewSet.as_view({'get': 'list', 'post': 'create'}), name='usuarios'),
-    # path('usuarios/<int:pk>/', UsuarioDetail.as_view()),
+    path('imagenes/', ImagenesList.as_view(), name='imagenes-list'),
+    path('imagenes/<int:pk>/', ImagenesDetail.as_view(), name='imagen-detail'),
 
+    # Usuarios OK
+    path('usuarios/', UsuariosViewSet.as_view({'get': 'list', 'post': 'create'}), name='usuarios'),
+    path('usuarios/<int:pk>/', UsuariosViewSet.as_view({'get': 'retrieve', 'delete': 'destroy'})),
+
+    # Categorias OK
     path('categorias/', CategoriaList.as_view(), name='categorias'),
-    path('categorias/<int:pk>/', CategoriaDetail.as_view()),
+    path('categorias/<int:pk>/', CategoriaDetail.as_view(), name='categoria_detail1'),
 
     path('pedido/', PedidoList.as_view(), name='pedido'),
     path('pedido/<int:pk>/', PedidoDetail.as_view()),

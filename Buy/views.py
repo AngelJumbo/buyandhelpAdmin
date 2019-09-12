@@ -72,25 +72,39 @@ class ContactView(TemplateView):
 
         return redirect('contact')
 
+
+class ImagenesList(generics.ListCreateAPIView):
+
+    queryset = Imagen.objects.all()
+    serializer_class = ImagenSerializer
+
+
+class ImagenesDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Imagen.objects.all()
+    serializer_class = ImagenSerializer
+
+
 #API REST
 #get, post
-class ArticulosList(generics.ListCreateAPIView):
-    queryset = Articulo.objects.all()
-    serializer_class = ArticuloSerializer
+class ArticulosList(viewsets.ViewSet):
 
-    def get_object(self):
-        queryset = self.get_queryset()
-        obj = get_object_or_404(
-            queryset,
-            pk = self.kwargs['pk'],
-        )
+    def list(self, request, *args, **kwargs):
+        queryset = Articulo.objects.all()
+        serializer = ArticuloSerializerDetail(queryset, context={'request': request}, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-        return obj
+    def create(self, request, *args, **kwargs):
+        serializer = ArticuloSerializer
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
 
 #updtate, delete
 class ArticulosDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Articulo.objects.all()
-    serializer_class = ArticuloSerializer
+    serializer_class = ArticuloSerializerDetail
 
 
 class UsuariosViewSet(viewsets.ViewSet):
@@ -106,6 +120,21 @@ class UsuariosViewSet(viewsets.ViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, requset, pk):
+        try:
+            usuario = UsuarioModel.objects.get(pk=pk)
+            serializer = UsuarioSerializerDetail(usuario)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except UsuarioModel.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def destroy(self, request, pk):
+        try:
+            usuario = UsuarioModel.objects.get(pk=pk)
+            usuario.delete()
+        except UsuarioModel.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 #get, post
@@ -265,7 +294,7 @@ class ArticuloList(APIView):
     def get(self, request):
         articulos=Articulo.objects.all()
         #imagenes=Imagen.objects.all()
-        serializer=ArticuloSerializer2(articulos,many=True)
+        serializer=ArticuloSerializer(articulos,many=True)
         return Response(serializer.data)
 
     def post(self,request):
@@ -277,11 +306,11 @@ class ArticuloListComprador(APIView):
         try:
             return Articulo.objects.get(pk=pk)
         except Articulo.DoesNotExist:
-            raise Http404
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request):
         articulos=Articulo.objects.filter(id_usuario=request.GET['id_usuario'])
-        serializer=ArticuloSerializer2(articulos,many=True)
+        serializer=ArticuloSerializer(articulos,many=True)
         return Response(serializer.data)
 
     def post(self,request):
@@ -352,19 +381,3 @@ class comprobarUsuario(APIView):
         serialized_obj = UsuarioSerializer(usuario, many=False)
 
         return Response(serialized_obj.data)
-
-class imagenes(APIView):
-    def get(self, request):
-
-
-        imagenes = Imagen.objects.filter(id_articulo="id_articulo")
-        serializer=ImagenSerializer(imagenes,many=True)
-        #serialized_obj = serializers.serialize('json', [ usuario, ])
-        #dict_obj = model_to_dict( usuario )
-        #serialized_obj = json.dumps(dict_obj)
-        
-        #return HttpResponse(serialized_obj, mimetype='application/json')
-        return Response(serializer.data)
-
-
-

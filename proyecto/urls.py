@@ -42,5 +42,7 @@ urlpatterns = [
     path('buscarUsuario/<int:pk>/', views.buscarUsuario.as_view()),
     path('comprobarUsuario/', views.comprobarUsuario.as_view()),
     path('comprobarUsuario/<int:pk>/', views.comprobarUsuario.as_view()),
-    path('imagenes/', views.imagenes.as_view()),
+    # path('imagenes/', views.imagenes.as_view()),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
