@@ -95,7 +95,6 @@ class ArticulosList(generics.ListCreateAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
-        print(request.data)
         serializer = ArticuloSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -106,8 +105,25 @@ class ArticulosList(generics.ListCreateAPIView):
 # Serializer OK
 class ArticulosDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Articulo.objects.all()
-    serializer_class = ArticuloSerializerDetail
+    serializer_class = ArticuloSerializer
 
+    def retrieve(self, request, pk):
+        try:
+            articulo = Articulo.objects.get(pk=pk)
+            serializer = ArticuloSerializerDetail(articulo, context={'request': request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Articulo.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def update(self, request, pk):
+        try:
+            articulo = Articulo.objects.get(pk=pk)
+            serializer = ArticuloSerializer(articulo, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+        except Articulo.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 # Serializer OK
 class UsuariosViewSet(viewsets.ViewSet):
@@ -313,58 +329,17 @@ class ArticuloListComprador(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request):
-        articulos=Articulo.objects.filter(id_usuario=request.GET['id_usuario'])
-        serializer=ArticuloSerializer(articulos,many=True)
+        articulos=Articulo.objects.filter(usuario__id=request.GET['id_usuario'])
+        serializer=ArticuloSerializerDetail(articulos,many=True,context={'request':request})
         return Response(serializer.data)
 
-    def post(self,request):
-        
-        print("post !!!!!!!!!!!", flush=True)
-        if(Articulo.objects.filter(id_articulo=request.data.get('id_articulo')).exists()):
-            print("post2 !!!!!!!!!!!", flush=True)
-            articulo=Articulo.objects.get(id_articulo=request.data.get('id_articulo'))
-            print("post2 !!!!!!!!!!!", flush=True)
-            articulo.id_categoria=Categoria.objects.get(id_categoria=request.data.get('id_categoria'))
-            print("post2 !!!!!!!!!!!", flush=True)
-            articulo.nombre=request.data.get('nombre')
-            print("post2 !!!!!!!!!!!", flush=True)
-            articulo.precio=request.data.get('precio')
-            print("post2 !!!!!!!!!!!", flush=True)
-            articulo.donacion=request.data.get('donacion')
-            articulo.descrip=request.data.get('descrip')
-            articulo.save()
-
-            if(not (request.data.get('imagen') is None)):
-                imagenAnterior=Imagen.objects.get(id_articulo=articulo.id_articulo)
-                imagenAnterior.delete()
-                imagenArchi=b64decode(request.data.get('imagen'))
-                Imagen.objects.create(
-                    id_articulo=articulo,
-                    imagen=ContentFile(imagenArchi,request.data.get('imagen_nombre')))
-
-                return HttpResponse(status=201)
-
-
-        else:
-            articulo=Articulo.objects.create(
-                id_usuario=UsuarioModel.objects.get(id_usuario=request.data.get('id_usuario')),
-                id_categoria=Categoria.objects.get(id_categoria=request.data.get('id_categoria')),
-                nombre=request.data.get('nombre'),
-                precio=request.data.get('precio'),
-                donacion=request.data.get('donacion'),
-                descrip=request.data.get('descrip'))
-            imagenArchi=b64decode(request.data.get('imagen'))
-            Imagen.objects.create(
-                id_articulo=articulo,
-                imagen=ContentFile(imagenArchi,request.data.get('imagen_nombre')))
-
-            return HttpResponse(status=201)
-
-    def delete(self, request):
-
-        articulo=Articulo.objects.get(id_articulo=request.GET['id_articulo'])
-        articulo.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def delete(self, request, pk):
+        try:
+            articulo=Articulo.objects.get(pk=pk)
+            articulo.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Articulo.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 class buscarUsuario(APIView):
     def get(self, request):

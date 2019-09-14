@@ -124,9 +124,23 @@ class ArticuloSerializer(serializers.ModelSerializer):
         articulo = Articulo(**validated_data)
         articulo.save()
         for imagen in imagenes.values():
-            print(imagen)
             Imagen.objects.create(articulo=articulo, imagen=imagen)
         return articulo
+
+    def update(self, instance, validated_data):
+        imagenes = validated_data.pop('imagen') if validated_data.get('imagen') else []
+        instance.categoria = validated_data.pop('categoria') if validated_data.get('categoria') else instance.categoria
+        instance.usuario = validated_data.pop('usuario') if validated_data.get('usuario') else instance.usuario
+        instance.nombre = validated_data.pop('nombre') if validated_data.get('nombre') else instance.nombre
+        instance.precio = validated_data.pop('precio') if validated_data.get('precio') else instance.precio
+        instance.donacion = validated_data.pop('donacion') if validated_data.get('donacion') else instance.donacion
+        instance.descrip = validated_data.pop('descrip') if validated_data.get('descrip') else instance.descrip
+        instance.save()
+        if len(imagenes) > 0:
+            Imagen.objects.filter(articulo__id=instance.id).delete()
+            for imagen in imagenes.values():
+                Imagen.objects.create(articulo=instance, imagen=imagen)
+        return instance
 
 
 class ArticuloSerializerList(serializers.ModelSerializer):
