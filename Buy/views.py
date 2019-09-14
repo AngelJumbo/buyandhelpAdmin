@@ -16,6 +16,7 @@ from .models import Usuario as UsuarioModel
 from .models import Imagen
 from base64 import b64decode
 from django.core.files.base import ContentFile
+from django.contrib import auth
 
 
 # Create your views here.
@@ -72,41 +73,43 @@ class ContactView(TemplateView):
 
         return redirect('contact')
 
-
+# Serializer OK
 class ImagenesList(generics.ListCreateAPIView):
-
     queryset = Imagen.objects.all()
     serializer_class = ImagenSerializer
 
-
+# Serializer OK
 class ImagenesDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Imagen.objects.all()
     serializer_class = ImagenSerializer
 
 
-#API REST
-#get, post
-class ArticulosList(viewsets.ViewSet):
+# Serializer OK
+class ArticulosList(generics.ListCreateAPIView):
 
+    queryset = Articulo.objects.all()
+    serializer_class = ArticuloSerializer
     def list(self, request, *args, **kwargs):
         queryset = Articulo.objects.all()
         serializer = ArticuloSerializerDetail(queryset, context={'request': request}, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
-        serializer = ArticuloSerializer
+        print(request.data)
+        serializer = ArticuloSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
 
-#updtate, delete
+# Serializer OK
 class ArticulosDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Articulo.objects.all()
     serializer_class = ArticuloSerializerDetail
 
 
+# Serializer OK
 class UsuariosViewSet(viewsets.ViewSet):
 
     def list(self, request, *args, **kwargs):
@@ -137,7 +140,7 @@ class UsuariosViewSet(viewsets.ViewSet):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-#get, post
+# Serializer OK
 class CategoriaList(generics.ListCreateAPIView):
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer
@@ -151,7 +154,8 @@ class CategoriaList(generics.ListCreateAPIView):
 
         return obj
 
-#updtate, delete
+
+# Serializer OK
 class CategoriaDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer
@@ -376,8 +380,16 @@ class buscarUsuario(APIView):
 class comprobarUsuario(APIView):
     def post(self,request):
 
-        #request.data.get('id_rol')
-        usuario=UsuarioModel.objects.get(cedula=request.data.get('cedula'),contrasenia=request.data.get('contrasenia'))
-        serialized_obj = UsuarioSerializer(usuario, many=False)
+        username = request.data.get('username')
+        password = request.data.get('password')
 
-        return Response(serialized_obj.data)
+        print(username, password)
+        user = auth.authenticate(username=username, password=password)
+        print(user)
+
+        if user is not None:
+            if user.is_active:
+                auth.login(request, user)
+                serializer = UsuarioSerializerDetail(user)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)

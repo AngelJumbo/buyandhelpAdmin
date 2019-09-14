@@ -23,7 +23,7 @@ class Usuario(AbstractUser):
     REQUIRED_FIELDS = ['email']
 
     def __str__(self):
-        return '{} {}'.format(self.first_name, self.last_name)
+        return '{}'.format(self.username)
 
 
 class Categoria(models.Model):
@@ -40,7 +40,6 @@ class Perfil(models.Model):
     rol = models.CharField(choices=roles, max_length=5, null=False, blank=False, default='COM')
     cedula= models.CharField(max_length=10, validators=[RegexValidator(regex_cedula)], null=False, blank=False)
     direccion=models.CharField(max_length=80, null=True, blank=True)
-
 
 
 class Articulo(models.Model):
@@ -77,8 +76,8 @@ class Pedido(models.Model):
     estado_pedido = models.CharField(max_length=10, null=False, blank=False, choices=estados, default='EMP')
     fecha=models.DateField(default=timezone.now(), null=False, blank=False)
     total_venta=models.FloatField(default=0.0, validators=[MinValueValidator(0.0)], null=False, blank=False)
-    comprador=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name = 'comprador_pedido', null=False, blank=False)
-    vendedor= models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name = 'vendedor_pedido', null=False, blank=False)
+    comprador=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='comprador_pedido', null=False, blank=False)
+    vendedor= models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='vendedor_pedido', null=False, blank=False)
 
     def __str__(self):
         return '{} - {}'.format(self.estado_pedido, self.comprador)

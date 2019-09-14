@@ -9,9 +9,11 @@ urlpatterns = [
     path('', index1, name='index'),
 
     # Articulos OK
-    path('articulos/',ArticulosList.as_view({'get': 'list', 'post': 'create'}), name ='articulos'),
+    path('articulos/',ArticulosList.as_view(), name ='articulos'),
+    # path('articulos/',ArticulosList.as_view({'get': 'list', 'post': 'create'}), name ='articulos'),
     path('articulos/<int:pk>/', ArticulosDetail.as_view()),
 
+    # Imagenes OK
     path('imagenes/', ImagenesList.as_view(), name='imagenes-list'),
     path('imagenes/<int:pk>/', ImagenesDetail.as_view(), name='imagen-detail'),
 
@@ -23,8 +25,8 @@ urlpatterns = [
     path('categorias/', CategoriaList.as_view(), name='categorias'),
     path('categorias/<int:pk>/', CategoriaDetail.as_view(), name='categoria_detail1'),
 
-    path('pedido/', PedidoList.as_view(), name='pedido'),
-    path('pedido/<int:pk>/', PedidoDetail.as_view()),
+    path('pedidos/', PedidoList.as_view(), name='pedidos-list'),
+    path('pedidos/<int:pk>/', PedidoDetail.as_view(), name='pedidos-detail'),
 
     path('articulospedido/', ArticuloPedidoList.as_view(), name='articulospedido'),
     path('articulospedido/<int:pk>/', ArticuloPedidoDetail.as_view()),
