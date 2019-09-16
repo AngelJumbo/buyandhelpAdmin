@@ -10,9 +10,11 @@ from django.utils.translation import ugettext_lazy as _
 
 VENDEDOR = 'VEN'
 COMPRADOR = 'COM'
+ADMINISTRADOR = 'ADM'
 roles = (
     (VENDEDOR, 'Vendedor'),
-    (COMPRADOR, 'Comprador')
+    (COMPRADOR, 'Comprador'),
+    (ADMINISTRADOR, 'Administrador')
 )
 
 class Usuario(AbstractUser):
@@ -110,8 +112,8 @@ tipo_pagos = (
 
 class Pago(models.Model):
     tipo_pago = models.CharField(max_length=10, null=False, blank=False, choices=tipo_pagos, default=EFECTIVO)
-    pedido = models.ForeignKey(Pedido,on_delete=models.CASCADE)
-    fecha_pago= models.DateField(default=None)
+    pedido = models.ForeignKey(Pedido,on_delete=models.CASCADE, unique=True)
+    fecha_pago= models.DateField(default=timezone.now(), null=True, blank=True)
 
     def __str__(self):
         return '{} - {}'.format(self.tipo_pago, self.pedido.__str__())

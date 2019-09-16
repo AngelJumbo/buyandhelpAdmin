@@ -30,14 +30,19 @@ urlpatterns = [
     path('carrito/<int:pk>/', CarritoDetail.as_view(), name='carrito-detail'),
     path('pedircarrito/<int:pk>/', DeCarritoAPedido.as_view(), name='carrito-pedido'),
 
+    # Pedido OK
     path('pedidos/', PedidoList.as_view(), name='pedidos-list'),
     path('pedidos/<int:pk>/', PedidoDetail.as_view(), name='pedidos-detail'),
+    path('estadisticapedidos/<int:pk>/', EstadisticaPedidos.as_view(), name='pedidos-estadistica'),
 
+    # Ok
     path('articulospedido/', ArticuloPedidoList.as_view(), name='articulospedido'),
     path('articulospedido/<int:pk>/', ArticuloPedidoDetail.as_view()),
 
+
     path('pago/', PagoList.as_view(), name='pago'),
     path('pago/<int:pk>/', PagoDetail.as_view()),
+    path('estadisticapagos/<int:pk>/', EstadisticaPagos.as_view()),
 
     path('publicacion/', PublicacionList.as_view(), name='publicacion'),
     path('publicacion/<int:pk>/', PublicacionDetail.as_view()),

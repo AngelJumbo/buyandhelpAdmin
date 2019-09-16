@@ -230,6 +230,14 @@ class PagoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class PagoSerializerDetail(serializers.ModelSerializer):
+
+    pedido = PedidoSerializerDetail()
+    class Meta:
+        model = Pago
+        fields = ('id', 'tipo_pago', 'fecha_pago', 'pedido')
+
+
 class PublicacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publicacion

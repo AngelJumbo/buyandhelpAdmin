@@ -197,7 +197,7 @@ class CarritoDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def retrieve(self, request, pk):
         try:
-            carrito = Carrito.objects.get(pk=pk)
+            carrito = Carrito.objects.get(usuario__id=pk)
             serializer = CarritoSerializerDetail(carrito, context={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Carrito.DoesNotExist:
@@ -206,7 +206,7 @@ class CarritoDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def update(self, request, pk):
         try:
-            carrito = Carrito.objects.get(pk=pk)
+            carrito = Carrito.objects.get(usuario__id=pk)
             serializer = CarritoSerializer(carrito, data=request.data)
             if serializer.is_valid():
                 serializer.save()
@@ -290,19 +290,53 @@ class PagoList(generics.ListCreateAPIView):
     queryset = Pago.objects.all()
     serializer_class = PagoSerializer
 
-    def get_object(self):
-        queryset = self.get_queryset()
-        obj = get_object_or_404(
-            queryset,
-            pk = self.kwargs['pk'],
-        )
+    def list(self, request, *args, **kwargs):
+        pagos = Pago.objects.all()
+        serializer = PagoSerializerDetail(pagos, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-        return obj
 
 #updtate, delete
 class PagoDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pago.objects.all()
     serializer_class = PagoSerializer
+
+    def retrieve(self, request, pk):
+        try:
+            pago = Pago.objects.get(pk=pk)
+            serializer = PagoSerializerDetail(pago)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Pago.DoesNotExist:
+            return Response(status.HTTP_404_NOT_FOUND)
+
+
+class EstadisticaPedidos(APIView):
+
+    def get(self, request, pk):
+        try:
+            pedidos = Pedido.objects.filter(comprador_id=pk)
+            pedido_serializer = PedidoSerializerDetail(pedidos, many=True)
+            suma = Pedido.objects.filter(comprador_id=pk).aggregate(Sum('total_venta'))
+            data = {'data': pedido_serializer.data, 'total': suma['total_venta__sum']}
+            return Response(data, status=status.HTTP_200_OK)
+        except Pedido.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class EstadisticaPagos(APIView):
+
+    def get(self, request, pk):
+        try:
+            pagos = Pago.objects.filter(pedido__comprador__id=pk)
+            pagos_serializer = PagoSerializerDetail(pagos, many=True)
+            suma = Pago.objects.filter(pedido__comprador__id=pk).aggregate(Sum('pedido__total_venta'))
+            print(suma)
+            # pedido_serializer = PedidoSerializerDetail(pedidos, many=True)
+            # suma = Pedido.objects.filter(comprador_id=pk).aggregate(Sum('total_venta'))
+            # data = {'data': pedido_serializer.data, 'total': suma['total_venta__sum']}
+            return Response(pagos_serializer.data, status=status.HTTP_200_OK)
+        except Pedido.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 #get, post
