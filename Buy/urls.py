@@ -28,6 +28,7 @@ urlpatterns = [
     # Carro OK
     path('carrito/', CarritoList.as_view(), name='carrito-list'),
     path('carrito/<int:pk>/', CarritoDetail.as_view(), name='carrito-detail'),
+    path('pedircarrito/<int:pk>/', DeCarritoAPedido.as_view(), name='carrito-pedido'),
 
     path('pedidos/', PedidoList.as_view(), name='pedidos-list'),
     path('pedidos/<int:pk>/', PedidoDetail.as_view(), name='pedidos-detail'),

@@ -86,7 +86,6 @@ class Pedido(models.Model):
     fecha=models.DateField(default=timezone.now(), null=False, blank=False)
     total_venta=models.FloatField(default=0.0, validators=[MinValueValidator(0.0)], null=False, blank=False)
     comprador=models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='comprador_pedido', null=False, blank=False)
-    # vendedor= models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='vendedor_pedido', null=False, blank=False)
 
     def __str__(self):
         return '{} - {}'.format(self.estado_pedido, self.comprador)
@@ -95,7 +94,7 @@ class Pedido(models.Model):
 class ArticuloPedido(models.Model):
     articulo=models.ForeignKey(Articulo,on_delete=models.CASCADE, null=False, blank=False)
     pedido=models.ForeignKey(Pedido,on_delete=models.CASCADE, null=False, blank=False)
-    cantidad=models.IntegerField(default=None, null=False, blank=False)
+    cantidad=models.IntegerField(default=1, null=False, blank=False)
 
     def __str__(self):
         return '{} - {}'.format(self.articulo.__str__(), self.pedido.__str__())

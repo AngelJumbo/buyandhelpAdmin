@@ -186,10 +186,27 @@ class PedidoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class PedidoSerializerDetail(serializers.ModelSerializer):
+
+    comprador = UsuarioSerializerDetail()
+    class Meta:
+        model = Pedido
+        fields = ('id', 'estado_pedido', 'fecha', 'total_venta', 'comprador')
+
+
 class ArticuloPedidoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ArticuloPedido
         fields = '__all__'
+
+
+class ArticuloPedidoSerializerDetail(serializers.ModelSerializer):
+
+    articulo = ArticuloSerializerDetail()
+    pedido = PedidoSerializerDetail()
+    class Meta:
+        model = ArticuloPedido
+        fields = ('id', 'articulo', 'pedido')
 
 
 class PagoSerializer(serializers.ModelSerializer):

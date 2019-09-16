@@ -17,6 +17,7 @@ from .models import Imagen
 from django.contrib import auth
 from django.core.mail import send_mail
 from django.conf import settings
+from django.db.models import Sum
 
 # Create your views here.
 #index
@@ -164,6 +165,27 @@ class UsuariosViewSet(viewsets.ViewSet):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
+# Serializer OK
+class CategoriaList(generics.ListCreateAPIView):
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(
+            queryset,
+            pk = self.kwargs['pk'],
+        )
+
+        return obj
+
+
+# Serializer OK
+class CategoriaDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
+
+
 class CarritoList(generics.ListAPIView):
     queryset = Carrito.objects.all()
     serializer_class = CarritoSerializerDetail
@@ -194,25 +216,23 @@ class CarritoDetail(generics.RetrieveUpdateDestroyAPIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-# Serializer OK
-class CategoriaList(generics.ListCreateAPIView):
-    queryset = Categoria.objects.all()
-    serializer_class = CategoriaSerializer
+class DeCarritoAPedido(APIView):
 
-    def get_object(self):
-        queryset = self.get_queryset()
-        obj = get_object_or_404(
-            queryset,
-            pk = self.kwargs['pk'],
-        )
-
-        return obj
-
-
-# Serializer OK
-class CategoriaDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Categoria.objects.all()
-    serializer_class = CategoriaSerializer
+    def post(self, request, pk):
+        try:
+            carrito = Carrito.objects.get(pk=pk)
+            articulos = Articulo.objects.filter(carrito=pk)
+            print(articulos)
+            if len(articulos) > 0:
+                suma = Articulo.objects.filter(carrito=pk).aggregate(Sum('precio'))
+                pedido = Pedido.objects.create(comprador=carrito.usuario, total_venta=suma['precio__sum'])
+                for articulo in articulos:
+                    ArticuloPedido.objects.create(pedido=pedido, articulo=articulo)
+                carrito.articulos.clear()
+                return Response(status=status.HTTP_200_OK)
+            return Response({'error': 'Carrito Vacio'}, status=status.HTTP_404_NOT_FOUND)
+        except Carrito.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 #get, post
@@ -220,19 +240,24 @@ class PedidoList(generics.ListCreateAPIView):
     queryset = Pedido.objects.all()
     serializer_class = PedidoSerializer
 
-    def get_object(self):
-        queryset = self.get_queryset()
-        obj = get_object_or_404(
-            queryset,
-            pk = self.kwargs['pk'],
-        )
+    def list(self, request, *args, **kwargs):
+        pedidos = Pedido.objects.all()
+        serializer = PedidoSerializerDetail(pedidos, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-        return obj
 
 #updtate, delete
 class PedidoDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pedido.objects.all()
     serializer_class = PedidoSerializer
+
+    def retrieve(self, request, pk):
+        try:
+            pedido = Pedido.objects.get(pk=pk)
+            serializer = PedidoSerializerDetail(pedido)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Pedido.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 #get, post
@@ -240,20 +265,24 @@ class ArticuloPedidoList(generics.ListCreateAPIView):
     queryset = ArticuloPedido.objects.all()
     serializer_class = ArticuloPedidoSerializer
 
-    def get_object(self):
-        queryset = self.get_queryset()
-        obj = get_object_or_404(
-            queryset,
-            pk = self.kwargs['pk'],
-        )
-
-        return obj
+    def list(self, request, *args, **kwargs):
+        articulopedido = ArticuloPedido.objects.all()
+        serializer = ArticuloPedidoSerializerDetail(articulopedido, many=True, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 #updtate, delete
 class ArticuloPedidoDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = ArticuloPedido.objects.all()
     serializer_class = ArticuloPedidoSerializer
+
+    def retrieve(self, request, pk):
+        try:
+            artped = ArticuloPedido.objects.get(pk=pk)
+            serializer = ArticuloPedidoSerializerDetail(artped, context={'request': request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except ArticuloPedido.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 #get, post
