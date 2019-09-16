@@ -164,6 +164,15 @@ class ArticuloSerializerDetail(serializers.ModelSerializer):
         fields = ('id', 'categoria','usuario','nombre','precio','donacion','descrip','imagenes')
 
 
+class ArticuloSerializerDetailSinImagen(serializers.ModelSerializer):
+
+    categoria = CategoriaSerializer(read_only=True)
+    usuario = UsuarioSerializerDetail(read_only=True)
+    class Meta:
+        model = Articulo
+        fields = ('id', 'categoria','usuario','nombre','precio','donacion','descrip')
+
+
 class CarritoSerializerDetail(serializers.ModelSerializer):
 
     usuario = UsuarioSerializerDetail()
@@ -188,10 +197,16 @@ class PedidoSerializer(serializers.ModelSerializer):
 
 class PedidoSerializerDetail(serializers.ModelSerializer):
 
+    articulos = serializers.SerializerMethodField()
     comprador = UsuarioSerializerDetail()
     class Meta:
         model = Pedido
-        fields = ('id', 'estado_pedido', 'fecha', 'total_venta', 'comprador')
+        fields = ('id', 'estado_pedido', 'fecha', 'total_venta', 'comprador', 'articulos')
+
+    def get_articulos(self, object):
+        articulos = ArticuloPedido.objects.filter(pedido=object).values_list('articulo', flat=True)
+        qs = Articulo.objects.filter(id__in=articulos)
+        return ArticuloSerializerDetailSinImagen(qs, many=True).data
 
 
 class ArticuloPedidoSerializer(serializers.ModelSerializer):

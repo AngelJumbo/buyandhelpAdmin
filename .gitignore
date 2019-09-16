@@ -15,4 +15,7 @@ __pycache__/
 # Django migrations files
 migrations/
 
+# Database
 db.sqlite3
+
+imagenes/
