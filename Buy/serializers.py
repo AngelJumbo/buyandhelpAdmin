@@ -33,6 +33,8 @@ class UsuarioSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         Perfil.objects.create(usuario=user, **perfil)
+        if  perfil['rol'] == 'COM':
+            Carrito.objects.create(usuario=user)
         return user
 
 
@@ -160,6 +162,22 @@ class ArticuloSerializerDetail(serializers.ModelSerializer):
     class Meta:        
         model = Articulo         
         fields = ('id', 'categoria','usuario','nombre','precio','donacion','descrip','imagenes')
+
+
+class CarritoSerializerDetail(serializers.ModelSerializer):
+
+    usuario = UsuarioSerializerDetail()
+    articulos = ArticuloSerializerDetail(many=True)
+    class Meta:
+        model = Carrito
+        fields = ('id', 'usuario', 'articulos')
+
+
+class CarritoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Carrito
+        fields = ('id', 'usuario', 'articulos')
 
 
 class PedidoSerializer(serializers.ModelSerializer):

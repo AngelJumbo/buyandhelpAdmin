@@ -25,6 +25,10 @@ urlpatterns = [
     path('categorias/', CategoriaList.as_view(), name='categorias'),
     path('categorias/<int:pk>/', CategoriaDetail.as_view(), name='categoria_detail1'),
 
+    # Carro OK
+    path('carrito/', CarritoList.as_view(), name='carrito-list'),
+    path('carrito/<int:pk>/', CarritoDetail.as_view(), name='carrito-detail'),
+
     path('pedidos/', PedidoList.as_view(), name='pedidos-list'),
     path('pedidos/<int:pk>/', PedidoDetail.as_view(), name='pedidos-detail'),
 

@@ -14,10 +14,9 @@ from rest_framework import status, viewsets
 from django.http import HttpResponse
 from .models import Usuario as UsuarioModel
 from .models import Imagen
-from base64 import b64decode
-from django.core.files.base import ContentFile
 from django.contrib import auth
-
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 #index
@@ -61,15 +60,24 @@ class ContactView(TemplateView):
             },
         )
 
+        subject = 'Contacto'
+        message = body
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ['geanleto@gmail.com',]
+        if send_mail(subject, message, email_from, recipient_list):
+            print('OK')
+        else:
+            print(":(")
+        '''
         email_message = EmailMessage(
             subject='Mensaje de usuario',
             body=body,
-            from_email='milton.garcia1998@hotmail.com',
-            to=['milton.garcia1998@hotmail.com','adanavarrete15@gmail.com'],
+            from_email='pruebadjangomail@gmail.com',
+            to=['milton.garcia1998@hotmail.com','adanavarrete15@gmail.com', 'pruebadjangomail@gmail.com'],
         )
         email_message.content_subtype = 'html'
         email_message.send()
-
+        '''
 
         return redirect('contact')
 
@@ -156,6 +164,36 @@ class UsuariosViewSet(viewsets.ViewSet):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
+class CarritoList(generics.ListAPIView):
+    queryset = Carrito.objects.all()
+    serializer_class = CarritoSerializerDetail
+
+
+class CarritoDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Carrito.objects.all()
+    serializer_class = CarritoSerializer
+
+    def retrieve(self, request, pk):
+        try:
+            carrito = Carrito.objects.get(pk=pk)
+            serializer = CarritoSerializerDetail(carrito, context={'request': request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Carrito.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+    def update(self, request, pk):
+        try:
+            carrito = Carrito.objects.get(pk=pk)
+            serializer = CarritoSerializer(carrito, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+        except Carrito.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
 # Serializer OK
 class CategoriaList(generics.ListCreateAPIView):
     queryset = Categoria.objects.all()
@@ -210,6 +248,7 @@ class ArticuloPedidoList(generics.ListCreateAPIView):
         )
 
         return obj
+
 
 #updtate, delete
 class ArticuloPedidoDetail(generics.RetrieveUpdateDestroyAPIView):

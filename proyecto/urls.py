@@ -42,7 +42,11 @@ urlpatterns = [
     path('buscarUsuario/<int:pk>/', views.buscarUsuario.as_view()),
     path('comprobarUsuario/', views.comprobarUsuario.as_view()),
     path('comprobarUsuario/<int:pk>/', views.comprobarUsuario.as_view()),
+    path('contact/', views.ContactView.as_view()),
     # path('imagenes/', views.imagenes.as_view()),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # Habilitar carpeta imagenes
+
+admin.site.site_header = 'Buy and Help Admin'
+admin.site.site_title = 'Buy and Help Admin'

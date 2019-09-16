@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -155,11 +156,21 @@ MEDIA_URL = '/imagenes/'
 
 
 #correo settings
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+'''
 EMAIL_HOST= 'smtp-mail.outlook.com'
 EMAIL_HOST_USER= 'milton.garcia1998@hotmail.com'
 EMAIL_HOST_PASSWORD= 'mukuroXchrome'
 EMAIL_USE_TLS= True
 EMAIL_PORT= 587
+'''
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'pruebadjangomail@gmail.com'
+EMAIL_HOST_PASSWORD = 'adminadminadmin'
+EMAIL_PORT = 587
 
 
 
