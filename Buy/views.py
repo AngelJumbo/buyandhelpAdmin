@@ -470,3 +470,42 @@ class comprobarUsuario(APIView):
                 serializer = UsuarioSerializerDetail(user)
                 return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class usuariosPorTipo(APIView):
+
+    def get(self, request):
+        vendedores = Perfil.objects.filter(rol='VEN').count()
+        compradores = Perfil.objects.filter(rol='COM').count()
+        admins = Perfil.objects.filter(rol='ADM').count()
+        return Response(data=[
+            {
+                'name': 'Vendedores',
+                'value': vendedores
+            },
+            {
+                'name': 'Compradores',
+                'value': compradores
+            },
+            {
+                'name': 'Administradores',
+                'value': admins
+            }
+        ], status=status.HTTP_200_OK)
+
+
+class estadisticasPedidos(APIView):
+
+    def get(self, request):
+        cantidad = []
+        suma_data = []
+        categorias = Categoria.objects.all()
+        for categoria in categorias:
+            n = ArticuloPedido.objects.filter(articulo__categoria=categoria).count()
+            suma = ArticuloPedido.objects.filter(articulo__categoria=categoria).aggregate(Sum('articulo__precio'))
+            cantidad.append({'name': categoria.nombre, 'value': n})
+            if suma['articulo__precio__sum']:
+                suma_data.append({'name': categoria.nombre, 'value': suma['articulo__precio__sum']})
+            else:
+                suma_data.append({'name': categoria.nombre, 'value': 0})
+        return Response(data={'cantidad': cantidad, 'suma': suma_data}, status=status.HTTP_200_OK)

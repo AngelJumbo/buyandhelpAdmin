@@ -38,7 +38,10 @@ urlpatterns = [
     # Ok
     path('articulospedido/', ArticuloPedidoList.as_view(), name='articulospedido'),
     path('articulospedido/<int:pk>/', ArticuloPedidoDetail.as_view()),
+    path('estadisticasarticuloscategorias/', estadisticasPedidos.as_view()),
 
+    # Graficos
+    path('cantidadusuarios/', usuariosPorTipo.as_view()),
 
     path('pago/', PagoList.as_view(), name='pago'),
     path('pago/<int:pk>/', PagoDetail.as_view()),
