@@ -140,7 +140,6 @@ class LikeArticule(APIView):
     def post(self, request, pk):
         try:
             articulo = Articulo.objects.get(pk=pk)
-            print(request.POST)
             data = request.data
             if 'user' not in request.data:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -160,7 +159,6 @@ class DislikeArticulo(APIView):
     def post(self, request, pk):
         try:
             articulo = Articulo.objects.get(pk=pk)
-            print(request.POST)
             data = request.data
             if 'user' not in request.data:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -170,6 +168,7 @@ class DislikeArticulo(APIView):
                 articulo.likes = articulo.liked_by.count()
                 articulo.save()
                 return Response(status=status.HTTP_200_OK)
+            print('ultimo', data)
             return Response(status=status.HTTP_400_BAD_REQUEST)
         except Articulo.DoesNotExist or UsuarioModel.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
