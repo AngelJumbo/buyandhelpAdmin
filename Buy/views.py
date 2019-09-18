@@ -259,11 +259,12 @@ class DeCarritoAPedido(APIView):
 
     def post(self, request, pk):
         try:
-            carrito = Carrito.objects.get(pk=pk)
-            articulos = Articulo.objects.filter(carrito=pk)
+            carrito = Carrito.objects.get(usuario__id=pk)
+            articulos = Articulo.objects.filter(carrito=carrito)
             print(articulos)
             if len(articulos) > 0:
-                suma = Articulo.objects.filter(carrito=pk).aggregate(Sum('precio'))
+                suma = Articulo.objects.filter(carrito=carrito).aggregate(Sum('precio'))
+                print(suma)
                 pedido = Pedido.objects.create(comprador=carrito.usuario, total_venta=suma['precio__sum'])
                 for articulo in articulos:
                     ArticuloPedido.objects.create(pedido=pedido, articulo=articulo)
