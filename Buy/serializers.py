@@ -159,9 +159,11 @@ class ArticuloSerializerDetail(serializers.ModelSerializer):
     imagenes = ImagenSerializer(many=True)
     categoria = CategoriaSerializer(read_only=True)
     usuario = UsuarioSerializerDetail(read_only=True)
+    liked_by = UsuarioSerializerDetail(many=True)
     class Meta:        
         model = Articulo         
-        fields = ('id', 'categoria','usuario','nombre','precio','donacion','descrip','imagenes')
+        fields = ('id', 'categoria','usuario','nombre','precio',
+                  'donacion','descrip', 'likes', 'liked_by', 'imagenes')
 
 
 class ArticuloSerializerDetailSinImagen(serializers.ModelSerializer):

@@ -51,6 +51,8 @@ class Articulo(models.Model):
     precio=models.FloatField(default=0.0, validators=[MinValueValidator(0.0)])
     donacion=models.FloatField(default=0.0, validators=[MinValueValidator(0.0)])
     descrip = models.CharField(max_length=100, null=True, blank=True)
+    likes = models.IntegerField(default=0, null=True, blank=True)
+    liked_by = models.ManyToManyField(Usuario, blank=True, related_name='liked_by')
 
     def __str__(self):
         return '{} - {} - {}'.format(self.nombre, self.usuario.__str__(), self.categoria.__str__())

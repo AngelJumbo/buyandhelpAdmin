@@ -10,8 +10,9 @@ urlpatterns = [
 
     # Articulos OK
     path('articulos/',ArticulosList.as_view(), name ='articulos'),
-    # path('articulos/',ArticulosList.as_view({'get': 'list', 'post': 'create'}), name ='articulos'),
     path('articulos/<int:pk>/', ArticulosDetail.as_view()),
+    path('like/<int:pk>/', LikeArticule.as_view()),
+    path('dislike/<int:pk>/', DislikeArticulo.as_view()),
 
     # Imagenes OK
     path('imagenes/', ImagenesList.as_view(), name='imagenes-list'),

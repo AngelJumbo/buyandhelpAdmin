@@ -134,6 +134,46 @@ class ArticulosDetail(generics.RetrieveUpdateDestroyAPIView):
         except Articulo.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+
+class LikeArticule(APIView):
+
+    def post(self, request, pk):
+        try:
+            articulo = Articulo.objects.get(pk=pk)
+            print(request.POST)
+            data = request.data
+            if 'user' not in request.data:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+            usuario = UsuarioModel.objects.get(pk=data['user'])
+            if data['user'] not in articulo.liked_by.values_list(flat=True):
+                articulo.liked_by.add(usuario)
+                articulo.likes = articulo.liked_by.count()
+                articulo.save()
+                return Response(status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        except Articulo.DoesNotExist or UsuarioModel.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class DislikeArticulo(APIView):
+
+    def post(self, request, pk):
+        try:
+            articulo = Articulo.objects.get(pk=pk)
+            print(request.POST)
+            data = request.data
+            if 'user' not in request.data:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+            usuario = UsuarioModel.objects.get(pk=data['user'])
+            if data['user'] in articulo.liked_by.values_list(flat=True):
+                articulo.liked_by.remove(usuario)
+                articulo.likes = articulo.liked_by.count()
+                articulo.save()
+                return Response(status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        except Articulo.DoesNotExist or UsuarioModel.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
 # Serializer OK
 class UsuariosViewSet(viewsets.ViewSet):
 
