@@ -54,8 +54,9 @@ urlpatterns = [
     path('puntuacionvendedor/', PuntuacionVendedorList.as_view(), name='puntuacionvendedor'),
     path('puntuacionvendedor/<int:pk>/', PuntuacionVendedorDetail.as_view()),
 
-    path('contact', ContactView.as_view(),name='contact'),
-    path('apis', apis,name='apis'),
+    # path('contact/', ContactView,name='contact'),
+    # path('contact/', ContactEmail.as_view(),name='contact'),
+    path('apis/', apis,name='apis'),
 ]
 
 handler404 = 'Buy.views.handler404'

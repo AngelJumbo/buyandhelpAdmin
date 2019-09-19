@@ -32,7 +32,7 @@ urlpatterns = [
     path('', RedirectView.as_view(url='api/', permanent=False), name="index"),
     #url('django-sb-admin/', include('django_sb_admin.urls')),
     #!!!!!!!!!!!!!!!!!!!!!!!!!
-    path('categorias/', views.CategoriaList2.as_view()),
+    # path('categorias/', views.CategoriaList2.as_view()),
     path('todosLosArticulos/', views.ArticuloList.as_view()),
     path('articulosComprador/', views.ArticuloListComprador.as_view()),
     path('articulosComprador/<int:pk>/', views.ArticuloListComprador.as_view()),
@@ -42,7 +42,7 @@ urlpatterns = [
     path('buscarUsuario/<int:pk>/', views.buscarUsuario.as_view()),
     path('comprobarUsuario/', views.comprobarUsuario.as_view()),
     path('comprobarUsuario/<int:pk>/', views.comprobarUsuario.as_view()),
-    path('contact/', views.ContactView.as_view()),
+    path('contact/', views.ContactEmail.as_view()),
     # path('imagenes/', views.imagenes.as_view()),
 ]
 

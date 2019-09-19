@@ -18,6 +18,8 @@ from django.contrib import auth
 from django.core.mail import send_mail
 from django.conf import settings
 from django.db.models import Sum
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 # Create your views here.
 #index
@@ -32,8 +34,43 @@ def handler404(request, exception):
     data = {}
     return render(request, '404.html', data)
 
-#formulario contactenos
+class ContactEmail(APIView):
 
+    def post(self, request):
+        name = request.POST.get('name')
+        city = request.POST.get('city')
+        email = request.POST.get('email')
+        issue = request.POST.get('issue')
+        message = request.POST.get('message')
+
+        body = render_to_string(
+            'email_content.html', {
+                'name': name,
+                'city': city,
+                'email': email,
+                'issue': issue,
+                'message': message,
+            },
+        )
+
+        message = Mail(
+            from_email=settings.EMAIL_HOST_USER,
+            to_emails='cindy9319@gmail.com',
+            subject='CORREO DAW',
+            html_content=body)
+        try:
+            sg = SendGridAPIClient('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')
+            response = sg.send(message)
+            print(response.status_code)
+            print(response.body)
+            print(response.headers)
+            return Response(status=status.HTTP_200_OK)
+        except Exception as e:
+            print(e.message)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+#formulario contactenos
 class ContactView(TemplateView):
     template_name = 'contact.html'
 
@@ -42,7 +79,6 @@ class ContactView(TemplateView):
         context['contact_form'] = ContactForm()
 
         return context
-        
 
     def post(self, request, *args, **kwargs):
         name = request.POST.get('name')
@@ -61,6 +97,7 @@ class ContactView(TemplateView):
             },
         )
 
+        print(body)
         subject = 'Contacto'
         message = body
         email_from = settings.EMAIL_HOST_USER

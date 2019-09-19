@@ -157,8 +157,8 @@ MEDIA_URL = '/imagenes/'
 
 #correo settings
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 '''
 EMAIL_HOST= 'smtp-mail.outlook.com'
 EMAIL_HOST_USER= 'milton.garcia1998@hotmail.com'
